@@ -12,7 +12,7 @@ SELECT
     candidate.lastname,
     candidate.suffix,
     office.name AS office,
-    state.name AS state,
+    state.name AS state_name,
     state.state_id AS state_id,
     districtname.name AS district,
     party.name AS party

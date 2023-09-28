@@ -11,7 +11,7 @@ WITH local_var AS (
 
 SELECT
     /*Due to a cartesian product from cross join, distinct is needed to prevent duplicates*/
-    DISTINCT
+    DISTINCT (candidate.candidate_id)
     candidate.candidate_id,
     candidate.firstname,
     candidate.nickname,
