@@ -4,10 +4,11 @@ Description: Reports the number of endorsement entries made within a certain dat
 */
 
 
+/*change to the appropriate date range*/
 WITH local_var AS (
 	SELECT 
-		'2023-01-01'::DATE AS start_date,
-		'2023-01-31'::DATE AS end_date
+		'2024-01-01'::DATE AS start_date,
+		'2024-12-31'::DATE AS end_date
 )
 
 SELECT 

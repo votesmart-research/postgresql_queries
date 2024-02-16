@@ -1,12 +1,12 @@
 /*
 Author: Johanan Tai
-Description: Queries office candidate ratings pertaining to the year(s) that they are in office.
+Description: Queries candidate ratings during the year(s) when they were in office.
 */
 
 
 /*change 'selected_rating_id' to the appropriate rating_id*/
 WITH local_var AS (
-	SELECT 11293 AS selected_rating_id
+	SELECT 12345 AS selected_rating_id
 	)
 
 SELECT
@@ -149,7 +149,9 @@ LEFT JOIN office ON office_candidate.office_id = office.office_id
 LEFT JOIN districtname ON office_candidate.districtname_id = 
 							districtname.districtname_id
 
--- WHERE rated_office_candidate.office_candidate_id IS NOT NULL
+/*Directional join creates null values, comment this out if you want only candidates 
+with office, district, and state information*/
+WHERE rated_office_candidate.office_candidate_id IS NOT NULL
 
 ORDER BY
 	office,

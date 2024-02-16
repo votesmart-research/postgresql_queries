@@ -1,12 +1,12 @@
 /*
 Author: Johanan Tai
-Description: Queries election candidate ratings pertaining to the year(s) of election.
+Description: Queries candidate ratings during the year(s) when they ran for election.
 */
 
 
 /*change 'selected_rating_id' to the appropriate rating_id*/
 WITH local_var AS (
-	SELECT 13506 AS selected_rating_id
+	SELECT 12345 AS selected_rating_id
 	)
 
 SELECT
@@ -28,7 +28,7 @@ FROM (
 	FROM election_candidate
 	JOIN election USING (election_id)
 	
-	/*join with this subquery in order to get the span of ratings*/
+	/*join with this subquery to get the span of ratings*/
 	FULL OUTER JOIN (
 		SELECT
 			candidate_id,
@@ -89,7 +89,11 @@ LEFT JOIN election_candidate ON rated_election_candidate.election_candidate_id =
 LEFT JOIN office ON election_candidate.office_id = office.office_id
 LEFT JOIN districtname ON election_candidate.districtname_id = 
 							districtname.districtname_id
-							
+
+/*Directional join creates null values, comment this out if you want only candidates 
+with office, district, and state information*/
+WHERE rated_election_candidate.election_candidate_id IS NOT NULL
+
 ORDER BY
 	office,
 	state_id,

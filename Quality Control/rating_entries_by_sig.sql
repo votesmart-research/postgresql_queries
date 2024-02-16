@@ -1,6 +1,6 @@
 /*
 Author: Johanan Tai
-Description: Shows all ratings entry of a SIG
+Description: Shows all ratings entries of a SIG
 */
 
 
@@ -17,7 +17,7 @@ SELECT
 
 FROM rating
 
-/*subquery gets number of candidates p[er rating entry*/
+/*subquery gets number of candidates per rating entry*/
 LEFT JOIN (
 	SELECT
 		rating_id,
@@ -32,7 +32,8 @@ LEFT JOIN ratingformat USING (ratingformat_id)
 LEFT JOIN ratingsession USING (ratingsession_id)
 LEFT JOIN release USING (release_id)
 
-WHERE sig_id = 1034
+/*change to the appropriate sig_id*/
+WHERE sig_id = 1234
 
 ORDER BY 
 	span DESC,

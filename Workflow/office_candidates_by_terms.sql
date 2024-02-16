@@ -5,8 +5,8 @@ Description: Queries office candidates (incumbents) by the start to the end of t
 
 
 WITH local_var AS (
-    SELECT '2022-01-03'::DATE AS termstarts,
-		   '2023-01-03'::DATE AS termends
+    SELECT '2023-01-03'::DATE AS termstarts,
+		   '2025-01-03'::DATE AS termends
 )
 
 SELECT
@@ -51,11 +51,12 @@ WHERE
 		OR (to_date(termstart, 'yyyy') < local_var.termends
 			AND to_date(termstart, 'yyyy') > local_var.termstarts))
 
-	/*
-	Other than termstart/termend, office id(s), office type(s) and state(s) 
-	are also considered for futher refinement.
-	*/
-	AND (office.office_id IN (5,6)
-		OR office.officetype_id IN (''))
-		
-	-- AND office_candidate.state_id IN ('')
+	/*change this to the appropriate office_id(s) or office type(s)*/
+	AND (
+		office.office_id = ANY('{5,6}')
+		OR office.officetype_id = ANY('{P,L}')
+	)
+	
+	/*comment this out if the candidates are not state specific, 
+    eg. Presidential, or all of congress*/
+	AND office_candidate.state_id = ANY('{AL,IA,NA,WY}')

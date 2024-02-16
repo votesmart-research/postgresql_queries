@@ -6,7 +6,7 @@ Description: Queries office candidates (incumbents) by the start to the end of t
 
 
 WITH local_var AS (
-    SELECT 2022 AS active_year,
+    SELECT 2024 AS active_year,
            1789 AS where_it_begins
 )
 
@@ -63,11 +63,12 @@ WHERE
 				AND EXTRACT(year FROM to_date(termstart, 'yyyy')) >= local_var.where_it_begins)
 	)
 
-	/*
-	Other than termstart/termend, office id(s), office type(s) and state(s) 
-	are also considered for futher refinement.
-	*/
-	AND (office.office_id IN (5,6)
-			OR office.officetype_id IN (''))
+	/*change this to the appropriate office_id(s) or office type(s)*/
+	AND (
+		office.office_id = ANY('{}')
+		OR office.officetype_id = ANY('{}')
+	)
 
-	-- AND office_candidate.state_id IN ('')
+	/*comment this out if the candidates are not state specific, 
+    eg. Presidential, or all of congress*/
+	AND office_candidate.state_id = ANY('{}')

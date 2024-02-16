@@ -7,9 +7,9 @@ Description: Shows endorsed candidates by endorse_id
 SELECT
 	election_candidate.candidate_id,
 	CONCAT_WS(', ',
-		  	candidate.lastname,
-			candidate.firstname
-			) AS candidate_name,
+		candidate.lastname,
+		candidate.firstname
+	) AS candidate_name,
 	state.name AS state,
 	office.name AS office,
 	districtname.name AS district
@@ -24,8 +24,10 @@ LEFT JOIN districtname ON election_candidate.districtname_id =
 LEFT JOIN candidate ON election_candidate.candidate_id =
 						candidate.candidate_id
 
-WHERE endorse_id = 34259
+/*change to the appropriate endorse_id*/
+WHERE endorse_candidate.endorse_id = 1234
 
 ORDER BY
 	office.name,
+	/* Numbers as strings orders by the first digits */
 	NULLIF(REGEXP_REPLACE(districtname.name, '\D', '', 'g'), '')::INT

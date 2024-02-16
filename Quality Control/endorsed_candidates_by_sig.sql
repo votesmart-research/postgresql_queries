@@ -1,13 +1,14 @@
 /*
 Author: Johanan Tai
 Description: Shows endorsed candidates by sig_id, year and office. This is typically
-			 used to check congressional endorsements.
+			 used to check for congressional endorsements.
 */
 
 
 SELECT
 	candidate_info.candidate_id,
 	candidate_info.candidate_name,
+	election.electionyear,
 	CASE
 		WHEN election.special IS True
 		THEN CONCAT_WS(' ', state.name, '(Special)')
@@ -48,14 +49,19 @@ JOIN election ON endorse.election_id = election.election_id
 LEFT JOIN officetype ON election.officetype_id = officetype.officetype_id
 LEFT JOIN state ON election.state_id = state.state_id
 
-WHERE 
-	endorse.sig_id = 1034
+WHERE
+	/*change to the appropriate sig_idy*/
+	endorse.sig_id = 1234
 	AND 
-	election.electionyear = 2022
+	/*change to the appropriate election year(s)*/
+	election.electionyear = ANY('{2023, 2024}')
 	AND
-	officetype.name LIKE '%Congressional%'
+	/*change to appropriate office types*/
+	officetype.name SIMILAR TO('%Congressional%|%Legislative%')
 	
 ORDER BY
+	election.electionyear DESC,
 	state.name,
 	candidate_info.office,
+	/* Numbers as strings orders by the first digits */
 	NULLIF(REGEXP_REPLACE(candidate_info.district, '\D', '', 'g'), '')::INT

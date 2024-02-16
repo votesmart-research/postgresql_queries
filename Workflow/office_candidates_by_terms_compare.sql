@@ -53,9 +53,11 @@ FROM
 			OR (to_date(termstart, 'yyyy') < local_var.termends
 				AND to_date(termstart, 'yyyy') > local_var.termstarts))
 
-		AND (office.office_id IN (5,6)
-			 OR office.officetype_id IN (''))
-	) a
+		AND (
+			office.office_id = ANY('{}')
+			OR office.officetype_id = ANY('{}')
+		)
+	) A
 	
 	FULL OUTER JOIN
 
@@ -107,10 +109,12 @@ FROM
 					AND EXTRACT(year FROM to_date(termstart, 'yyyy')) >= local_var.where_it_begins)
 
 			)
-		AND (office.office_id IN (5,6)
-			OR office.officetype_id IN (''))
-	) b
+		AND (
+			office.office_id = ANY('{}')
+			OR office.officetype_id = ANY('{}')
+		)
+	) B
 	
-	ON a.office_candidate_id = b.office_candidate_id
+	ON A.office_candidate_id = B.office_candidate_id
 	
-	WHERE a.office_candidate_id ISNULL OR b.office_candidate_id ISNULL
+	WHERE A.office_candidate_id ISNULL OR B.office_candidate_id ISNULL

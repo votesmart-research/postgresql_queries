@@ -59,7 +59,12 @@ LEFT JOIN (
 
 LEFT JOIN release USING (release_id)
 
-WHERE sig_id = 1034
+/*change to the appropriate sig_idy*/
+WHERE sig_id = 1234
+/*change to the appropriate election year(s)*/
+AND electionyear = ANY('{2023, 2024}')
+/*change the dates of when the endorsements was created or modified */
+AND (endorse.created >= '2024-01-01' OR endorse.modified >= '2024-12-31')
 
 ORDER BY 
     election_info.electionyear DESC, 

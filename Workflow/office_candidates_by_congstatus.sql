@@ -5,13 +5,13 @@ Description: Queries office candidates (incumbents) by their legislative session
 
 
 WITH local_var AS (
-    SELECT '2022-01-03'::DATE AS termstarts,
-		   '2023-01-03'::DATE AS termends
+    SELECT '2023-01-03'::DATE AS termstarts,
+		   '2025-01-03'::DATE AS termends
 )
 
 SELECT
     /*Due to a cartesian product from cross join, distinct is needed to prevent duplicates*/
-    DISTINCT (candidate.candidate_id)
+    DISTINCT ON (candidate.candidate_id)
     candidate.candidate_id,
     candidate.firstname,
     candidate.nickname,
@@ -38,14 +38,16 @@ JOIN congstatus ON congstatus_candidate.congstatus_id = congstatus.congstatus_id
 
 CROSS JOIN local_var
 
-/*
-Other than termstart/termend, office id(s), office type(s) and state(s) 
-are also considered for futher refinement.
-*/
 WHERE 
     congstatus.statusdate BETWEEN local_var.termstarts and local_var.termends
     
-    AND (office_candidate.office_id IN (5,6)
-        OR office.officetype_id IN (''))
+    /* =ANY() is IN() */
+    /*change this to the appropriate office_id(s) or office_type_id(s)*/
+    AND (
+        office_candidate.office_id = ANY('{5,6}')
+        OR office.officetype_id = ANY('{P,L}')
+    )
 
-    -- AND office_candidate.state_id IN ('')
+    /*comment this out if the candidates are not state specific, 
+    eg. Presidential, or all of congress*/
+    AND office_candidate.state_id = ANY('{AL,IA,NA,WY}')
