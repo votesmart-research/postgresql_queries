@@ -27,7 +27,7 @@ LEFT JOIN candidate ON election_candidate.candidate_id =
 						candidate.candidate_id
 
 /*change to the appropriate endorse_id*/
-WHERE endorse_candidate.endorse_id = 35008
+WHERE endorse_candidate.endorse_id = 43541
 ORDER BY
 	office.name,
 	/* Numbers as strings orders by the first digits */

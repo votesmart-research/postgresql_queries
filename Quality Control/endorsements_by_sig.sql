@@ -63,7 +63,7 @@ LEFT JOIN officetype ON officetype.officetype_id = election_info.officetype_id
 
 /*change to the appropriate sig_idy*/
 WHERE 
-sig_id = 3143
+sig_id = 2473
 /*change to the appropriate election year(s)*/
 --AND electionyear = ANY('{2022}')
 --AND officetype.name SIMILAR TO('%Statewide%')
