@@ -1,9 +1,3 @@
-/*
-Author: Johanan Tai
-Description: List all SIGS to update spreadsheet for workflow purposes
-*/
-
-
 SELECT 
 	sig.sig_id,
 	sig.name AS sig_name,
@@ -13,7 +7,11 @@ SELECT
 	sig.ratinggroup,
 	R.recent_rating,
 	E.recent_endorsement,
-	ARRAY_TO_STRING(C.cat_name,', ') AS "categories"
+	ARRAY_TO_STRING(C.cat_name,', ') AS "categories",
+	'https://admin-prod.paas.votesmart.io/data/sigs/' || sig.sig_id AS "admin_url",
+	'' AS "updates?",
+	'' AS "check_date",
+	'' AS "check_by"
 
 FROM sig
 JOIN release ON sig.release_id = release.release_id
@@ -40,7 +38,7 @@ LEFT JOIN (
 ) USING (sig_id)
 
 
-LEFT JOIN (
+JOIN (
 	SELECT sig_id, 
 		   ARRAY_AGG(category.name ORDER BY category.name) as cat_name
 
@@ -48,10 +46,11 @@ LEFT JOIN (
 	JOIN category USING (category_id)
 	
 	GROUP BY sig_id
+	HAVING
+	(BOOL_OR(category.name LIKE 'Foreign%')
+	AND
+	BOOL_OR(category.name LIKE 'Religion'))
+	OR
+	sig_id IN (2199, 3198, 2411, 3126, 1671, 2403)
 	) C USING (sig_id);
-
-SELECT * FROM endorse_candidate WHERE endorse_candidate_id = 477748;
-
-SELECT * FROM election_candidate WHERE election_candidate_id = 267971;
-
-SELECT * FROM election WHERE election_id = 3819;
+	

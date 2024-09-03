@@ -6,6 +6,8 @@ Description: Shows endorsed candidates by sig_id, year and office. This is typic
 
 
 SELECT
+	DISTINCT ON (election.electionyear, state.name, candidate_info.office, candidate_info.candidate_id)
+	endorse_candidate.endorse_candidate_id,
 	candidate_info.candidate_id,
 	candidate_info.candidate_name,
 	election.electionyear,
@@ -51,17 +53,16 @@ LEFT JOIN state ON election.state_id = state.state_id
 
 WHERE
 	/*change to the appropriate sig_idy*/
-	endorse.sig_id = 1234
-	AND 
+	endorse.sig_id IN (1285)
 	/*change to the appropriate election year(s)*/
-	election.electionyear = ANY('{2023, 2024}')
-	AND
+--	AND election.electionyear = ANY('{2022}')
+--	AND
 	/*change to appropriate office types*/
-	officetype.name SIMILAR TO('%Congressional%|%Legislative%')
+--	officetype.name SIMILAR TO('%Congressional%|%Legislative%')
 	
 ORDER BY
 	election.electionyear DESC,
 	state.name,
-	candidate_info.office,
+	candidate_info.office
 	/* Numbers as strings orders by the first digits */
-	NULLIF(REGEXP_REPLACE(candidate_info.district, '\D', '', 'g'), '')::INT
+--	NULLIF(REGEXP_REPLACE(candidate_info.district, '\D', '', 'g'), '')::INT

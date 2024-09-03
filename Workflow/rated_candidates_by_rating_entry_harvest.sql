@@ -8,7 +8,7 @@ SELECT
 	rating_candidate.candidate_id,
 	rating_candidate.sig_rating,
 	CASE 
-		WHEN NOT(rating_candidate.our_rating IS NULL) THEN rating_candidate.sig_rating
+		WHEN rating_candidate.our_rating IS NULL THEN rating_candidate.sig_rating
 		ELSE rating_candidate.our_rating
 	END as our_rating,
     rating.span,
@@ -23,4 +23,4 @@ SELECT
 FROM rating
 JOIN rating_candidate USING (rating_id)
 
-WHERE rating_id = 1234
+WHERE rating_id = 13959

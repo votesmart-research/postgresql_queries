@@ -6,14 +6,16 @@ Description: Shows endorsed candidates by endorse_id
 
 SELECT
 	election_candidate.candidate_id,
+	election_candidate.election_candidate_id,
 	CONCAT_WS(', ',
 		candidate.lastname,
 		candidate.firstname
 	) AS candidate_name,
 	state.name AS state,
 	office.name AS office,
-	districtname.name AS district
-
+	districtname.name AS district,
+	election_candidate.created
+	
 FROM endorse_candidate
 
 JOIN election_candidate USING (election_candidate_id)
@@ -25,9 +27,11 @@ LEFT JOIN candidate ON election_candidate.candidate_id =
 						candidate.candidate_id
 
 /*change to the appropriate endorse_id*/
-WHERE endorse_candidate.endorse_id = 1234
-
+WHERE endorse_candidate.endorse_id = 35008
 ORDER BY
 	office.name,
 	/* Numbers as strings orders by the first digits */
-	NULLIF(REGEXP_REPLACE(districtname.name, '\D', '', 'g'), '')::INT
+	NULLIF(REGEXP_REPLACE(districtname.name, '\D', '', 'g'), '')::INT;
+	
+
+SELECT * FROM endorse WHERE endorse_id = 43476;

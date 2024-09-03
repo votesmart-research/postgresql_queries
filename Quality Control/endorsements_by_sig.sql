@@ -5,6 +5,7 @@ Description: Shows all endorsement entries of a SIG
 
 
 SELECT
+	endorse.sig_id,
 	endorse.endorse_id, 
 	election_info.election_name,
 	endorse_candidate.count AS candidates_endorsed,
@@ -58,13 +59,16 @@ LEFT JOIN (
 	ON endorse.election_id = election_info.election_id
 
 LEFT JOIN release USING (release_id)
+LEFT JOIN officetype ON officetype.officetype_id = election_info.officetype_id
 
 /*change to the appropriate sig_idy*/
-WHERE sig_id = 1234
+WHERE 
+sig_id = 3143
 /*change to the appropriate election year(s)*/
-AND electionyear = ANY('{2023, 2024}')
+--AND electionyear = ANY('{2022}')
+--AND officetype.name SIMILAR TO('%Statewide%')
 /*change the dates of when the endorsements was created or modified */
-AND (endorse.created >= '2024-01-01' OR endorse.modified >= '2024-12-31')
+--AND (endorse.created >= '2024-08-05' OR endorse.modified >= '2024-08-05')
 
 ORDER BY 
     election_info.electionyear DESC, 
