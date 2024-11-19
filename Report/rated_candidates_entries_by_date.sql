@@ -7,8 +7,8 @@ Description: Reports the number of rating entries made within a certain date ran
 /*change to the appropriate date range*/
 WITH local_var AS (
 	SELECT 
-		'2024-01-01'::DATE AS start_date,
-		'2024-12-31'::DATE AS end_date
+		'2024-11-12'::DATE AS start_date,
+		'2024-11-16'::DATE AS end_date
 )
 
 SELECT 
@@ -25,10 +25,14 @@ FROM (
 	FROM rating
 	LEFT JOIN rating_candidate USING (rating_id)
 	
-	WHERE rating_candidate_id IS NOT NULL
+	WHERE 
+		rating_candidate_id IS NOT NULL
+		AND
+		rating.sig_id <> ANY('{2571, 1034}')
+
 	
 	GROUP BY rating_id
 	) A
 	
 CROSS JOIN local_var
-WHERE A.created BETWEEN local_var.start_date AND local_var.end_date
+WHERE A.modified BETWEEN local_var.start_date AND local_var.end_date

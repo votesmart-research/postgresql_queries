@@ -69,6 +69,14 @@ ORDER BY
 	finsource_candidate_id DESC;
 
 
+SELECT *
+
+FROM finsource_candidate
+
+WHERE candidate_id = 769;
+
+
+
 -- Enumerate the candidates that has more than one OpenSecrets
 SELECT 
     candidate_id, 
@@ -93,7 +101,7 @@ WITH CandWMoreThanOneCode AS (
     FROM 
         finsource_candidate
     WHERE 
-        finsource_id = 4
+        finsource_id = 1
     GROUP BY 
         candidate_id
     HAVING 
@@ -109,7 +117,7 @@ EnumeratedCandidates AS (
 	FROM 
 	    finsource_candidate
 	WHERE 
-	    finsource_id = 4
+	    finsource_id = 1
 )
 
 SELECT 
@@ -126,23 +134,15 @@ ORDER BY
     candidate_id;
 
 
-SELECT *
-
-FROM finsource_candidate
-
-ORDER BY finsource_candidate_id DESC
-
-LIMIT 5;
-
-
 
 WITH CandWMoreThanOneCode AS (
     SELECT 
         candidate_id
     FROM 
         finsource_candidate
-    WHERE 
-        finsource_id = 4
+    WHERE
+    	-- May change according to each finsource institution (1=CRP, 2=FEC, 4=NIMSP)
+        finsource_id = 1
     GROUP BY 
         candidate_id
     HAVING 
@@ -157,7 +157,8 @@ EnumeratedCandidates AS (
 	    ROW_NUMBER() OVER (PARTITION BY candidate_id ORDER BY finsource_candidate_id ASC) AS row_number
 	FROM 
 	    finsource_candidate
-	WHERE 
+	WHERE
+		-- May change according to each finsource institution (1=CRP, 2=FEC, 4=NIMSP)
 	    finsource_id = 1
 )
 

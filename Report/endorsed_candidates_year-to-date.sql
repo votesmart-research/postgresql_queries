@@ -14,7 +14,7 @@ JOIN endorse USING (endorse_id)
 WHERE 
     /*exclude endorsements from certain sigs, especially ones that are for testing, 
     you may add to the array if needed*/
-    endorse.sig_id = ANY('{{2571}}')
+    endorse.sig_id <> ANY('{2571}')
     AND
     /*tracks all the candidates endorsed from before the month of the current date*/
     EXTRACT(MONTH FROM endorse.created) < EXTRACT(MONTH FROM CURRENT_DATE)

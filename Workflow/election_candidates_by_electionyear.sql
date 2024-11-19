@@ -48,10 +48,10 @@ WHERE
 
     /*change this to the appropriate office_id(s) or office type(s)*/
     AND (
-        office.office_id = ANY('{5,6}')
-        OR office.officetype_id = ANY('{P,L}')
+        office.office_id = ANY('{5,6,7,8,9}')
+--        OR office.officetype_id = ANY('{P,L}')
     )
     
     /*comment this out if the candidates are not state specific, 
     eg. Presidential, or all of congress*/
-    AND election_candidate.state_id = ANY('{AL,IA,NA,WY}')
+--    AND election_candidate.state_id = ANY('{AL,AR,DE,KS,MN,PR,TX,VT,WI,AZ,CA,CO,FL,GA,IN,ME,MA,MI,MN,MT,NV,NH,NM,NY,NC,OH,OK,OR,PA,RI,SC,TN,UT,WA,WV,IA,NA,WY}')

@@ -33,7 +33,7 @@ LEFT JOIN ratingsession USING (ratingsession_id)
 LEFT JOIN release USING (release_id)
 
 /*change to the appropriate sig_id*/
-WHERE sig_id = 1234
+WHERE sig_id = 1734J
 
 ORDER BY 
 	span DESC,

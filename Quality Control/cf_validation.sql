@@ -58,12 +58,12 @@ WHERE
 	candidate_id IN (
 		SELECT candidate_id
 		FROM finsource_candidate
-		WHERE finsource_id = 1
+		WHERE finsource_id = 2
 		GROUP BY candidate_id
 		HAVING COUNT(code) > 1
 	)
 AND
-	finsource_id = 1
+	finsource_id = 2
 ORDER BY 
 	code, 
 	finsource_candidate_id DESC;
@@ -85,4 +85,11 @@ WHERE
     
 ORDER BY candidate_id;
 
+
+SELECT * FROM finsource_candidate WHERE code LIKE ' %';
+
+-- Remove leading space from the code column
+UPDATE finsource_candidate
+SET code = TRIM(LEADING ' ' FROM code)
+WHERE code LIKE ' %';
 

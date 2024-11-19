@@ -157,4 +157,9 @@ ORDER BY
 	office,
 	state_id,
 	district,
-	candidate.lastname
+	candidate.lastname;
+	
+SELECT *
+
+FROM office_candidate
+WHERE office_candidate_id = 94828;

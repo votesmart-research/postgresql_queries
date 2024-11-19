@@ -7,8 +7,8 @@ Description: Reports the number of endorsement entries made within a certain dat
 /*change to the appropriate date range*/
 WITH local_var AS (
 	SELECT 
-		'2024-01-01'::DATE AS start_date,
-		'2024-12-31'::DATE AS end_date
+		'2024-11-12'::DATE AS start_date,
+		'2024-11-16'::DATE AS end_date
 )
 
 SELECT 
@@ -25,10 +25,15 @@ FROM (
 	FROM endorse
 	LEFT JOIN endorse_candidate USING (endorse_id)
 	
-	WHERE endorse_candidate_id IS NOT NULL
+	WHERE 
+		endorse_candidate_id IS NOT NULL
+		AND
+		endorse.sig_id <> ANY('{2571, 1034}')
 	
 	GROUP BY endorse_id
 	) A
 	
 CROSS JOIN local_var
-WHERE A.created BETWEEN local_var.start_date AND local_var.end_date
+WHERE (A.modified BETWEEN local_var.start_date AND local_var.end_date) 
+	OR 
+	  (A.created BETWEEN local_var.start_date AND local_var.end_date)

@@ -62,15 +62,15 @@ LEFT JOIN release USING (release_id)
 LEFT JOIN officetype ON officetype.officetype_id = election_info.officetype_id
 
 /*change to the appropriate sig_idy*/
-WHERE 
-sig_id = 2473
+WHERE
+sig_id = 2644
 /*change to the appropriate election year(s)*/
---AND electionyear = ANY('{2022}')
---AND officetype.name SIMILAR TO('%Statewide%')
+AND electionyear = ANY('{2024}')
+--AND officetype.name SIMILAR TO('%Cong%')	
 /*change the dates of when the endorsements was created or modified */
---AND (endorse.created >= '2024-08-05' OR endorse.modified >= '2024-08-05')
+--AND (endorse.modified >= '2024-11-15' OR endorse.created >= '2024-11-15')
 
 ORDER BY 
     election_info.electionyear DESC, 
 	election_info.officetype_id,
-	election_info.election_name
+	election_info.election_name;
